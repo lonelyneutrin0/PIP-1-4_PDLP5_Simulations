@@ -1,7 +1,8 @@
 # PIP-1-4_PDLP5_Simulations (Single Lipid Bilayer)
 This directory contains the builds and scripts used for the single lipid bilayer aquaporin simulations. The simulation data can be found at `/serviceberry/tank/hkbel/aquaporin/singlebilayer/sims/gridforces`. 
 ## Project Structure 
-/singlebilayer/
+```txt
+/singlebilayer/ 
 ├──builds
 |  ├──porinalone
 |  |   ├──grad
@@ -23,7 +24,7 @@ This directory contains the builds and scripts used for the single lipid bilayer
 |  |      ├──0.010
 |  |      ├──0.150
 |  ├──porinwithcap
-
+```
 ## Builds 
 The `builds` subdirectory contains the protein files used for simulation. There are 2 subdirectories - 
 - `porinalone`: Uncapped aquaporin files 
