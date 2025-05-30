@@ -1,0 +1,24 @@
+/venv
+
+**/old/ 
+
+// NAMD
+# Log and trajectory files
+*.log
+*.traj
+*.colvars*
+
+# Coordinate, velocity, and extended system files
+*.coor
+*.vel
+*.xsc
+*.xst
+
+# Restart-related files (including old versions)
+*.restart.*
+
+# FFTW-related files
+FFTW*
+
+// SLURM
+slurm*
