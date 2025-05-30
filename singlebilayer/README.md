@@ -53,3 +53,6 @@ Z_MAX = 85
 Z_MIN = -85 
 BIN_SIZE = 5
 ```
+
+## Simulations 
+The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/aquaporin/singlebilayer/sims/gridforces`.
