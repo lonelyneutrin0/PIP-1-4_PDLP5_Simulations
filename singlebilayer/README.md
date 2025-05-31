@@ -1,5 +1,5 @@
 # PIP-1-4_PDLP5_Simulations (Single Lipid Bilayer)
-This directory contains the builds and scripts used for the single lipid bilayer aquaporin simulations. The simulation data can be found at `/serviceberry/tank/hkbel/aquaporin/singlebilayer/sims/gridforces`. 
+This directory contains the builds and scripts used for the single lipid bilayer aquaporin simulations. The simulation data can be found at `/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims`. 
 ## Project Structure 
 ```txt
 /singlebilayer/ 
@@ -81,4 +81,4 @@ BIN_SIZE = 5
 ```
 
 ## Simulations 
-The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/aquaporin/singlebilayer/sims/gridforces`.
+The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims`.
