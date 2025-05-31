@@ -23,3 +23,16 @@ FFTW*
 
 // SLURM
 slurm*
+
+// Files that are too large
+doublebilayer/builds/porinalone/cations_inside/0.010/system.psf
+doublebilayer/builds/porinalone/ionized_outside/0.150/system.psf
+doublebilayer/builds/porinalone/ionized_outside/0.010/system.psf
+doublebilayer/builds/porinalone/ionized_outside/0.036/system.psf
+doublebilayer/builds/porinalone/ionized_throughout/0.150/system.psf
+doublebilayer/builds/porinalone/misc/nograd/0.150/system.psf
+doublebilayer/builds/porinalone/misc/noions/0.010/system.psf
+doublebilayer/builds/porinalone/cations_outside/0.010/system.psf
+doublebilayer/builds/porinalone/ionized_inside/0.010/system.psf
+doublebilayer/builds/porinalone/ionized_inside/0.036/system.psf
+doublebilayer/builds/porinalone/ionized_inside/0.150/system.psf
