@@ -13,7 +13,7 @@
 *.coor
 *.vel
 *.xsc
-*.xst
+*.xst.*
 
 # Restart-related files (including old versions)
 *.restart.*
