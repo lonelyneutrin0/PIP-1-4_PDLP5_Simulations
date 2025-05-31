@@ -6,8 +6,7 @@ This directory contains the builds and scripts used for the double lipid bilayer
 /doublebilayer/ 
 ├──builds
 |  ├──porinalone
-|  |   ├──ionized_throughout
-|  |   |  ├──0.150
+|  |   ├──ionized_throughout/0.150
 |  |   ├──ionized_inside
 |  |   |  ├──0.010
 |  |   |  ├──0.036
@@ -22,7 +21,16 @@ This directory contains the builds and scripts used for the double lipid bilayer
 |  |   |  ├──noions/0.010
 |  |   |  ├──nograd/0.150
 |  ├──porinwithcap
-|
+|  |   ├──ionized_inside
+|  |   |  ├──0.010
+|  |   |  ├──0.036
+|  |   |  ├──0.150
+|  |   ├──ionized_outside
+|  |   |  ├──0.010
+|  |   |  ├──0.036
+|  |   |  ├──0.150
+|  |   ├──cations_outside/0.010
+|  |   ├──cations_inside/0.010
 ├──scripts
 |
 ├──sims
