@@ -24,6 +24,8 @@ This directory contains the builds and scripts used for the single lipid bilayer
 |  |      ├──0.010
 |  |      ├──0.150
 |  ├──porinwithcap
+|
+├──toppar
 ```
 ## Builds 
 The `builds` subdirectory contains the protein files used for simulation. There are 2 subdirectories - 
