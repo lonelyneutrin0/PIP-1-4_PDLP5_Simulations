@@ -47,9 +47,6 @@ This directory contains the builds and scripts used for the double lipid bilayer
 |  |   |  ├──0.150
 |  |   ├──cations_outside/0.010
 |  |   ├──cations_inside/0.010
-|  |   ├──misc
-|  |   |  ├──noions/0.010
-|  |   |  ├──nograd/0.150
 |  ├──porinwithcap
 |  |   ├──ionized_inside
 |  |   |  ├──0.010
