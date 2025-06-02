@@ -11,6 +11,7 @@ $cation set occupancy 1
 $anion set occupancy -1
 
 $sel set beta 0
-$ions set beta 5
+$ions set beta 10
 
-$sel writepdb gradT_2.pdb
+$sel writepdb gradB_10.pdb
+exit
