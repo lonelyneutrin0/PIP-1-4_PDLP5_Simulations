@@ -81,5 +81,13 @@ Z_MIN = -85
 BIN_SIZE = 5
 ```
 
+### `trackwater.py`
+This file loads the `.psf` and trajectory files in the current directory and tracks water molecule positions through the aquaporin. It saves them to a compressed `.npy` file.
+
+### `plotwater.py`
+This file takes the `.npy` file produced by `trackwater.py` and bins the water positions to track crossings through the aquaporin. 
+
+Note: Currently, this sums all crossings and does not account for direction, see #2.
+
 ## Simulations 
 The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims`.
