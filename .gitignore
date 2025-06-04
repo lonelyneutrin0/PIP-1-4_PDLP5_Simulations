@@ -45,3 +45,7 @@ doublebilayer/builds/porinwithcap/ionized_throughout/0.150/system.psf
 doublebilayer/builds/porinwithcap/ionized_inside/0.150/system.psf
 doublebilayer/builds/porinwithcap/ionized_inside/0.036/system.psf
 doublebilayer/builds/porinwithcap/ionized_inside/0.010/system.psf
+
+// NumPy Data files
+*.npy
+*.npz
