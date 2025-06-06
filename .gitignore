@@ -1,6 +1,9 @@
 /venv
 
 **/old/ 
+singlebilayer/original_sims
+**/potential_data/
+singlebilayer/sims/porinalone/colvars
 
 // NAMD
 # Log and trajectory files
