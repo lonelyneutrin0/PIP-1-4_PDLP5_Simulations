@@ -218,7 +218,7 @@ colvarsConfig      ../../../../../builds/porinalone/grad/0.010/membCnstrnt.in
 ############################################################# 
 mgridforce                  on
  
-mgridforcefile       oxy    ../../../../../builds/porinalone/grad/0.010/gradT_2.pdb
+mgridforcefile       oxy    ../../../../../builds/porinalone/grad/0.010/gradB_20.pdb
 mgridforcecol        oxy    B 
 mgridforcechargecol  oxy    O 
 mgridforcepotfile    oxy    ../../../../../builds/porinalone/grad/0.010/potential.dx

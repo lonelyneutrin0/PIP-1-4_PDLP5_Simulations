@@ -216,7 +216,7 @@ colvarsConfig      ../../../../../builds/porinwithcap/grad/0.150/membCnstrnt.in
 ############################################################# 
 mgridforce                  on
  
-mgridforcefile       oxy    ../../../../../builds/porinwithcap/grad/0.150/gradT_2.pdb
+mgridforcefile       oxy    ../../../../../builds/porinwithcap/grad/0.150/gradB_20.pdb
 mgridforcecol        oxy    B 
 mgridforcechargecol  oxy    O 
 mgridforcepotfile    oxy    ../../../../../builds/porinwithcap/grad/0.150/potential.dx
