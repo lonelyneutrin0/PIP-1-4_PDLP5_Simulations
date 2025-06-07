@@ -9,10 +9,20 @@ This directory contains the builds and scripts used for the single lipid bilayer
 |  |   ├──grad
 |  |   |  ├──0.010
 |  |   |  ├──0.150
+|  |   |  ├──1.0
 |  |   ├──nograd
-|  |      ├──0.010
-|  |      ├──0.150
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
 |  ├──porinwithcap
+|  |   ├──grad
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
+|  |   ├──nograd
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
 |
 ├──scripts
 |
@@ -21,23 +31,33 @@ This directory contains the builds and scripts used for the single lipid bilayer
 |  |   ├──grad
 |  |   |  ├──0.010
 |  |   |  ├──0.150
+|  |   |  ├──1.0
 |  |   ├──nograd
-|  |      ├──0.010
-|  |      ├──0.150
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
 |  ├──porinwithcap
+|  |   ├──grad
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
+|  |   ├──nograd
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
 |
 ├──toppar
 ```
 ## Builds 
 The `builds` subdirectory contains the protein files used for simulation. There are 2 subdirectories - 
 - `porinalone`: Uncapped aquaporin files 
-- `porinwithcap`: Capped aquaporin files (currently empty as testing is being done with the uncapped aquaporin)
+- `porinwithcap`: Capped aquaporin files
 
 In each of these, there are two folders: 
-- `grad`: Files with a gradient, i.e. all sodium ions moved to the top compartment
+- `grad`: Files with a gradient, i.e. all sodium ions moved to the top compartment, with equal chlorides in both compartments
 - `nograd`: Files with no gradient, i.e. equal number of sodium ions and chloride ions in both compartments
 
-There are protein files with 10mM and 150mM ion concentrations.
+There are protein files with 10mM, 150mM, and 1M ion concentrations.
 
 ## Scripts 
 This directory contains various scripts used to perform calculations or load trajectories. The packages assumed to be installed are `numpy` and `matplotlib`.
@@ -91,3 +111,5 @@ Note: Currently, this sums all crossings and does not account for direction, see
 
 ## Simulations 
 The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims`.
+
+Note: Current simulations are being run with β=20.
