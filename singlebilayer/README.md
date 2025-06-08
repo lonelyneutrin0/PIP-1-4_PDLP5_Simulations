@@ -46,6 +46,26 @@ This directory contains the builds and scripts used for the single lipid bilayer
 |  |   |  ├──0.150
 |  |   |  ├──1.0
 |
+├──data
+|  ├──porinalone
+|  |   ├──grad
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
+|  |   ├──nograd
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
+|  ├──porinwithcap
+|  |   ├──grad
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
+|  |   ├──nograd
+|  |   |  ├──0.010
+|  |   |  ├──0.150
+|  |   |  ├──1.0
+|
 ├──toppar
 ```
 ## Builds 
@@ -91,7 +111,7 @@ set cla_to_delete [lrange $chloride_indices 0 m-1]
 The output `psf` and `pdb` files are `system.psf` and `system.pdb`.
 
 ### `create_grad.tcl`
-This script is used to write `gradT_2.pdb`, which is required for gridforces. 
+This script is used to write `grad.pdb` files, which are required for gridforces. 
 
 ### `plot_ion_distribution.py`
 This script takes a `cation_z.dat` and `anion_z.dat` file produced by `calc_ions.tcl` and plots a histogram of ion distribution over the second half of the trajectory. It assumes that the `.dat` files are located in the directory in which the function call occurs. The following lines should be modified depending on the system size. 
@@ -101,13 +121,30 @@ Z_MIN = -85
 BIN_SIZE = 5
 ```
 
-### `trackwater.py`
+### `single_trackwater.py`
 This file loads the `.psf` and trajectory files in the current directory and tracks water molecule positions through the aquaporin. It saves them to a compressed `.npy` file.
 
-### `plotwater.py`
+Note: Run this through VMD's Python interpreter
+
+### `single_plotwater.py`
 This file takes the `.npy` file produced by `trackwater.py` and bins the water positions to track crossings through the aquaporin. 
 
 Note: Currently, this sums all crossings and does not account for direction, see #2.
+
+### `trackwater.py`
+This is a master script for tracking water molecules across all systems, and multiple replicates. It expects the file system to be identical to the abovementioned project structure.
+
+Note: Run this through VMD's Python interpreter.
+
+## `plotwater.py`
+This is a master script for calculating crossing rates across all systems, and multiple replicates. It expects the file system to be identical to the abovementioned project structure. 
+
+Note: This file prints output, so it's advisable to redirect it with something like `python plotwater.py > analysis.log`
+
+## `analysis.sh`
+This is a master bash script that just calls `trackwater.py` and `plotwater.py` and directs the output to a log file. 
+
+Note: This script must be modified to activate the desired virtual environment.
 
 ## Simulations 
 The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims`.
