@@ -209,7 +209,7 @@ outputTiming 10000
 ## COLLECTIVE VARIABLES                                    ##
 #############################################################
 colvars            on
-colvarsConfig      ../../../../../builds/porinwithcap/grad/1.0/membCnstrnt.in
+colvarsConfig      ../../../../../builds/porinwithcap/nograd/1.0/membCnstrnt.in
 
 ############################################################# 
 ## GRID FORCE & RUN                                        ## 

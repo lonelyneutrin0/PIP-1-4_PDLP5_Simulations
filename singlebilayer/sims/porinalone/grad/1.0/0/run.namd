@@ -255,7 +255,6 @@ if { $restartfoo <  0 } {
 	reinitvels          $temperature
 	run 50000
 } else {
-	GPUresident on
-	#CUDASOAintegrate on
+	# GPUresident on
 	run 1000000  ;
 }
