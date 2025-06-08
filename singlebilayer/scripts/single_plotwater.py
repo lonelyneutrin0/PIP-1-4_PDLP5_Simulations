@@ -182,48 +182,19 @@ def count_crossings(digitized: NDArray, data: NDArray) -> Tuple[NDArray, NDArray
 
 
 def main():
-    BUILD_PATH = "/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/builds"
-    SIM_PATH = "/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims"
-    DATA_PATH = "/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/data"
+    data = np.load(f"watz.npy")
+    sim_time_ns = 0.1 * len(data)  # each frame is 100ps, convert to ns
 
-    NUM_REPLICATES = 3
+    digitized_data = digitize_water(data)
 
-    for i in ['porinalone', 'porinwithcap']:
-        for j in ['grad', 'nograd']:
-            for k in ['0.010', '0.150', '1.0']:
+    start_time = time.time()
+    times, durations = count_crossings2(digitized_data, data)
+    rate = len(times) / sim_time_ns
 
-                rates = np.zeros(shape=(NUM_REPLICATES,))
-                sim_times = np.zeros_like(rates)
-                processing_times = np.zeros_like(rates)
+    print(f"Crossings={len(times)}, Simulation Time={sim_time_ns:.2f} ns, rate={rate:.4f} crossings/ns")
+    print(f"Processing time: {time.time() - start_time:.2f} s")
 
-                for l in range(NUM_REPLICATES):
-                    data = np.load(f'{DATA_PATH}/{i}/{j}/{k}/{l}/watz.npy')
-                    sim_time_ns = 0.1 * len(data)  # each frame is 100ps, convert to ns
-
-                    digitized_data = digitize_water(data)
-
-                    start_time = time.time()
-                    times, durations = count_crossings2(digitized_data, data)
-                    rate = len(times) / sim_time_ns * 1000 # crossings/μs
-                    print(f'Processing {i}/{j}/{k}/{l} ....')
-                    print(f"Crossings={len(times)}, Simulation Time={sim_time_ns:.2f} ns, rate={rate:.4f} crossings/μs")
-                    
-                    process_time = time.time() - start_time
-                    print(f"Processing time: {process_time:.2f} s\n")
-
-                    np.savez(f"{DATA_PATH}/{i}/{j}/{k}/{l}/reduced.npz", time=times, duration=durations)
-                    
-                    rates[l] = rate
-                    sim_times[l] = sim_time_ns
-                    processing_times[l] = process_time
-
-                print(f'\n Results for {i}/{j}/{k}/{l} (averaged over {NUM_REPLICATES} replicates...\n')
-                print(f'Crossing Rate:\n')
-                print(f'Average: {np.average(rates):.4f} crossings/μs')
-                print(f'Standard Error: {np.std(rates)/np.sqrt(NUM_REPLICATES):.4f} crossings/μs\n')
-                print(f'Average Simulation Time: {np.average(sim_times):.2f} ns')
-                print(f'Average Processing Time: {np.average(processing_times):.2f}s\n')
-
+    np.savez(f"reduced.npz", time=times, duration=durations)
 
 if __name__ == "__main__":
     main()

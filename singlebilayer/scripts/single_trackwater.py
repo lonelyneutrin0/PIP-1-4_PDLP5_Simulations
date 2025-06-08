@@ -86,20 +86,11 @@ def watertracking(mol) -> NDArray:
 		watZ[f] = R[watidx,2]
 	return watZ
 
-# no def main() here, this is called through vmd-python
-BUILD_PATH = "/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/builds"
-SIM_PATH = "/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims"
-DATA_PATH = "/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/data"
+PSF_DIR = "../../../../../builds/porinalone/grad/0.010/"
 
-NUM_REPLICATES = 3
-
-for i in ['porinalone', 'porinwithcap']:
-	for j in ['grad', 'nograd']:
-		for k in ['0.010', '0.150', '1.0']:
-			for l in range(NUM_REPLICATES):
-				mol = loadtraj(psf_dir=f'{BUILD_PATH}/{i}/{j}/{k}', dcd_dir=f'{SIM_PATH}/{i}/{j}/{k}/{l}')
-				recenter(mol)
-				watz = watertracking(mol)
-				np.save(f'{DATA_PATH}/{i}/{j}/{k}/{l}/watz.npy', watz)
-				mol.delete()
+mol = loadtraj(".", ".")
+recenter(mol)
+watz = watertracking(mol)
+np.save("watz.npy", watz)
+mol.delete()
 exit()
