@@ -4,6 +4,7 @@
 singlebilayer/original_sims
 **/potential_data/
 singlebilayer/sims/porinalone/colvars
+singlebilayer/data/
 
 // NAMD
 # Log and trajectory files
