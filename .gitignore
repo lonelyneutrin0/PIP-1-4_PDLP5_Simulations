@@ -53,3 +53,7 @@ doublebilayer/builds/porinwithcap/ionized_inside/0.010/system.psf
 // NumPy Data files
 *.npy
 *.npz
+
+// Data Files 
+*.dat
+*.png
