@@ -16,10 +16,10 @@ Z_MIN = -85
 BIN_SIZE = 5
 NUM_FRAMES = anions.shape[0]
 
-Discard the first half of the data 
-anions = anions[NUM_FRAMES//2:, :]
-cations = cations[NUM_FRAMES//2:, :]
-NUM_FRAMES = NUM_FRAMES//2
+# Discard the first half of the data 
+anions = anions[NUM_FRAMES//2+1:, :]
+cations = cations[NUM_FRAMES//2+1:, :]
+NUM_FRAMES = NUM_FRAMES//2+1
 
 # Create the bin and digitize the given data 
 bins = np.arange(start=Z_MIN, stop=Z_MAX, step=BIN_SIZE)
