@@ -25,26 +25,49 @@ This directory contains the builds and scripts used for the single lipid bilayer
 |  |   |  ├──1.0
 |
 ├──scripts
+|  ├──build_scripts
+|  ├──sim_scripts
 |
 ├──sims
-|  ├──porinalone
-|  |   ├──grad
-|  |   |  ├──0.010
-|  |   |  ├──0.150
-|  |   |  ├──1.0
-|  |   ├──nograd
-|  |   |  ├──0.010
-|  |   |  ├──0.150
-|  |   |  ├──1.0
-|  ├──porinwithcap
-|  |   ├──grad
-|  |   |  ├──0.010
-|  |   |  ├──0.150
-|  |   |  ├──1.0
-|  |   ├──nograd
-|  |   |  ├──0.010
-|  |   |  ├──0.150
-|  |   |  ├──1.0
+|  ├──NPT
+|  |  ├──porinalone
+|  |  |   ├──grad
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |  |   ├──nograd
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |  ├──porinwithcap
+|  |  |   ├──grad
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |  |   ├──nograd
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |
+|  ├──NVT
+|  |  ├──porinalone
+|  |  |   ├──grad
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |  |   ├──nograd
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |  ├──porinwithcap
+|  |  |   ├──grad
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
+|  |  |   ├──nograd
+|  |  |   |  ├──0.010
+|  |  |   |  ├──0.150
+|  |  |   |  ├──1.0
 |
 ├──data
 |  ├──porinalone
@@ -136,17 +159,15 @@ This is a master script for tracking water molecules across all systems, and mul
 
 Note: Run this through VMD's Python interpreter.
 
-## `plotwater.py`
+### `plotwater.py`
 This is a master script for calculating crossing rates across all systems, and multiple replicates. It expects the file system to be identical to the abovementioned project structure. 
 
 Note: This file prints output, so it's advisable to redirect it with something like `python plotwater.py > analysis.log`
 
-## `analysis.sh`
+### `analysis.sh`
 This is a master bash script that just calls `trackwater.py` and `plotwater.py` and directs the output to a log file. 
 
 Note: This script must be modified to activate the desired virtual environment.
 
 ## Simulations 
 The `sims` directory contains `run.namd` files to run the simulations. All required files have been included in `builds`. Since GitHub does not support very large files in repositories, existing simulation data should be copied from `/serviceberry/tank/hkbel/PIP-1-4_PDLP5_Simulations/singlebilayer/sims`.
-
-Note: Current simulations are being run with β=20.
