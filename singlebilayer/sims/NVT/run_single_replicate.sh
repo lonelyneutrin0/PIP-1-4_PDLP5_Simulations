@@ -8,7 +8,7 @@ do
 			cd ./${j}
 			for k in 0.010 0.150 1.0
 				do
-					cd ./${k}/0
+					cd ./${k}/beta_20
 					sbatch -J $i-$j-$k ../../../../submit.sh
 					cd ../../
 				done

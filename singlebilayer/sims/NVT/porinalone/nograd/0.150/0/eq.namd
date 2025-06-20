@@ -167,14 +167,14 @@ if { $restartfoo < 0 } {
 	cellOrigin 0.14 0.07 -1.84
 }
 
-#LangevinPiston on
-#LangevinPistonTarget 1.01325
-#LangevinPistonPeriod 200
-#LangevinPistonDecay 100
-#LangevinPistonTemp $temperature
-#useGroupPressure    yes
-#useConstantRatio    yes
-#useFlexibleCell     yes
+LangevinPiston on
+LangevinPistonTarget 1.01325
+LangevinPistonPeriod 200
+LangevinPistonDecay 100
+LangevinPistonTemp $temperature
+useGroupPressure    yes
+useConstantRatio    yes
+useFlexibleCell     yes
 
 # Integrator Parameters
 rigidBonds all
@@ -213,21 +213,6 @@ outputTiming 10000
 colvars            on
 colvarsConfig      ../../../../../../builds/porinalone/membCnstrnt.in
 
-############################################################# 
-## GRID FORCE & RUN                                        ## 
-############################################################# 
-mgridforce                  on
- 
-mgridforcefile       oxy    ../../../../../../builds/porinalone/nograd/0.150/gradB_20.pdb
-mgridforcecol        oxy    B 
-mgridforcechargecol  oxy    O 
-mgridforcepotfile    oxy    ../../../../../../builds/porinalone/potential.dx
-mgridforcescale      oxy    0 0 1
-mgridforcecont1      oxy    yes
-mgridforcecont2      oxy    yes
-mgridforcecont3      oxy    yes
-mgridforcevoff       oxy    0 0 1
-
 #############################################################
 ## EXTRA PARAMETERS                                        ##
 #############################################################
@@ -255,6 +240,6 @@ if { $restartfoo <  0 } {
 	reinitvels          $temperature
 	run 50000
 } else {
-	# GPUresident on
+	GPUresident on
 	run 1000000  ;
 }

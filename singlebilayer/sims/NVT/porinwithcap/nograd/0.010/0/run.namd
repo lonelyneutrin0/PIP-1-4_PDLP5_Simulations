@@ -9,8 +9,8 @@
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
 
-structure          ../../../../../../builds/porinwithcap/grad/1.0/system.psf
-coordinates        ../../../../../../builds/porinwithcap/grad/1.0/system.pdb
+structure          ../../../../../../builds/porinwithcap/nograd/0.010/system.psf
+coordinates        ../../../../../../builds/porinwithcap/nograd/0.010/system.pdb
 set runnum [llength [glob -nocomplain run*.dcd]]
 set outputname		run_[format "%03d" $runnum]
 set inputname		run_[format "%03d" [expr {$runnum -1}]]
@@ -167,15 +167,6 @@ if { $restartfoo < 0 } {
 	cellOrigin 0.14 0.07 10.84
 }
 
-#LangevinPiston on
-#LangevinPistonTarget 1.01325
-#LangevinPistonPeriod 200
-#LangevinPistonDecay 100
-#LangevinPistonTemp $temperature
-#useGroupPressure    yes
-#useConstantRatio    yes
-#useFlexibleCell     yes
-
 # Integrator Parameters
 rigidBonds all
 timestep            2.0
@@ -216,7 +207,7 @@ colvarsConfig      ../../../../../../builds/porinwithcap/membCnstrnt.in
 ############################################################# 
 mgridforce                  on
  
-mgridforcefile       oxy    ../../../../../../builds/porinwithcap/grad/1.0/gradB_20.pdb
+mgridforcefile       oxy    ../../../../../../builds/porinwithcap/nograd/0.010/gradB_1.pdb
 mgridforcecol        oxy    B 
 mgridforcechargecol  oxy    O 
 mgridforcepotfile    oxy    ../../../../../../builds/porinwithcap/potential.dx
@@ -253,6 +244,6 @@ if { $restartfoo <  0 } {
 	reinitvels          $temperature
 	run 50000
 } else {
-	# GPUresident on
+	GPUresident on
 	run 1000000  ;
 }

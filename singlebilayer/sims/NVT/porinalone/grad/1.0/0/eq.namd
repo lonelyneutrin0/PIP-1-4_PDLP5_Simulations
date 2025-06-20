@@ -9,8 +9,8 @@
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
 
-structure          ../../../../../../builds/porinwithcap/nograd/1.0/system.psf
-coordinates        ../../../../../../builds/porinwithcap/nograd/1.0/system.pdb
+structure          ../../../../../../builds/porinalone/grad/1.0/system.psf
+coordinates        ../../../../../../builds/porinalone/grad/1.0/system.pdb
 set runnum [llength [glob -nocomplain run*.dcd]]
 set outputname		run_[format "%03d" $runnum]
 set inputname		run_[format "%03d" [expr {$runnum -1}]]
@@ -145,7 +145,7 @@ parameters              ../../../../../../toppar/toppar_all36_label_fluorophore.
 
 
 wrapWater           on
-wrapNearest 		on
+wrapNearest 	    on
 
 # Force-Field Parameters
 exclude             scaled1-4
@@ -153,28 +153,28 @@ dielectric	        1.0
 vdwForceSwitching   on
 LJCorrection	    on
 		
-oneFourScaling      1.0
+1-4Scaling      1.0
 cutoff              12.
 switching           on
 switchdist          10.
 pairlistdist        14
-margin               5
+margin               4
 
 if { $restartfoo < 0 } { 
-	cellBasisVector1 145 0 0
-	cellBasisVector2 0 145 0
-	cellBasisVector3 0 0 191.28
-	cellOrigin 0.14 0.07 10.84
+	cellBasisVector1 139.11 0 0
+	cellBasisVector2 0 139.11 0
+	cellBasisVector3 0 0 166.28
+	cellOrigin 0.14 0.07 -1.84
 }
 
-#LangevinPiston on
-#LangevinPistonTarget 1.01325
-#LangevinPistonPeriod 200
-#LangevinPistonDecay 100
-#LangevinPistonTemp $temperature
-#useGroupPressure    yes
-#useConstantRatio    yes
-#useFlexibleCell     yes
+LangevinPiston on
+LangevinPistonTarget 1.01325
+LangevinPistonPeriod 200
+LangevinPistonDecay 100
+LangevinPistonTemp $temperature
+useGroupPressure    yes
+useConstantRatio    yes
+useFlexibleCell     yes
 
 # Integrator Parameters
 rigidBonds all
@@ -185,6 +185,7 @@ stepspercycle       200
 
 PME on
 PMEGridSpacing 1.0
+
 
 # Constant Temperature Control
 langevin            on    ;# do langevin dynamics
@@ -208,23 +209,9 @@ outputTiming 10000
 #############################################################
 ## COLLECTIVE VARIABLES                                    ##
 #############################################################
-colvars            on
-colvarsConfig      ../../../../../../builds/porinwithcap/membCnstrnt.in
 
-############################################################# 
-## GRID FORCE & RUN                                        ## 
-############################################################# 
-mgridforce                  on
- 
-mgridforcefile       oxy    ../../../../../../builds/porinwithcap/nograd/1.0/gradB_20.pdb
-mgridforcecol        oxy    B 
-mgridforcechargecol  oxy    O 
-mgridforcepotfile    oxy    ../../../../../../builds/porinwithcap/potential.dx
-mgridforcescale      oxy    0 0 1
-mgridforcecont1      oxy    yes
-mgridforcecont2      oxy    yes
-mgridforcecont3      oxy    yes
-mgridforcevoff       oxy    0 0 1
+colvars            on
+colvarsConfig      ../../../../../../builds/porinalone/membCnstrnt.in
 
 #############################################################
 ## EXTRA PARAMETERS                                        ##
@@ -253,6 +240,6 @@ if { $restartfoo <  0 } {
 	reinitvels          $temperature
 	run 50000
 } else {
-	# GPUresident on
+	GPUresident on
 	run 1000000  ;
 }
