@@ -1,112 +1,103 @@
- ## run it by " source solvation.tcl " in tkconsole ##
- ## do remember to make the psf and filename to system_autopsf ##
- ## creating the logfile and an outfile to store box vectors ## 
- ##logfile logfile.txt
-set ICs {0.50}
+## Run it by: source solvation.tcl in VMD's TkConsole ##
+## Auto-detects membrane region using segname MEMB and solvates above and below ##
+## Outputs box dimensions to file, adds ions, and prepares solvated structure ##
 
-foreach IC $ICs {
-mol load psf memb_lig_${IC}.psf pdb memb_lig_${IC}.pdb
-set memb [atomselect top all]
-set minmax [measure minmax $memb]
+set conc 0.50  ;# Replace or extend this list with your system indices (or just use 1 entry)
+set xysize 140 
+set zsize 166
+
+set input_file "noions"
+
+# Load input structure
+mol load psf ${input_file}.psf pdb ${input_file}.pdb
+
+set allsel [atomselect top all]
+set all_minmax [measure minmax $allsel]
+set x1 [lindex [lindex $all_minmax 0] 0]
+set x2 [lindex [lindex $all_minmax 1] 0]
+set y1 [lindex [lindex $all_minmax 0] 1]
+set y2 [lindex [lindex $all_minmax 1] 1]
+
+# Set solvation box dimensions in XY
+set x1 [expr { -$xysize / 2.0 }]
+set x2 [expr {  $xysize / 2.0 }]
+set y1 [expr { -$xysize / 2.0 }]
+set y2 [expr {  $xysize / 2.0 }]
+
+# Auto-detect membrane Z boundaries
+set membsel [atomselect top "segname MEMB"]
+set memb_minmax [measure minmax $membsel]
+set memb_z1 [lindex [lindex $memb_minmax 0] 2]
+set memb_z2 [lindex [lindex $memb_minmax 1] 2]
+
+set memb_length [expr {$memb_z2 - $memb_z1}]
+set buffer [expr {($zsize - $memb_length)/2}] ;# Amount of water (in Å) above/below the membrane
+
+# Cleanup before solvation
+mol delete all
+
+## ---- Solvation ---- ##
+package require solvate
+
+# Solvate below the membrane
+solvate ${input_file}.psf ${input_file}.pdb \
+    -minmax [list [list $x1 $y1 [expr {$memb_z1 - $buffer}]] [list $x2 $y2 [expr {$memb_z1+2}]]] \
+    -o lower_water
+
+# Solvate above the membrane
+solvate lower_water.psf lower_water.pdb \
+    -minmax [list [list $x1 $y1 [expr {$memb_z2-2}]] [list $x2 $y2 [expr {$memb_z2 + $buffer}]]] \
+    -o with_water -s WA
+
+mol delete all
+
+## ---- Autoionization ---- ##
+package require autoionize
+if {$conc == 0} {
+    autoionize -psf with_water.psf -pdb with_water.pdb -cation SOD -anion CLA -seg ION -o ionize -neutralize
+} else {
+    autoionize -psf with_water.psf -pdb with_water.pdb -sc $conc -cation SOD -anion CLA -seg ION -o ionize
+}
+
+mol delete all
+
+## ---- Set up PBC box ---- ##
+mol new ionize.psf
+mol addfile ionize.pdb
+set sel1 [atomselect top all]
+set minmax [measure minmax $sel1]
 set min [lindex $minmax 0]
 set max [lindex $minmax 1]
+set xsize [expr abs([lindex $min 0]) + abs([lindex $max 0])]
+set ysize [expr abs([lindex $min 1]) + abs([lindex $max 1])]
+set zsize [expr abs([lindex $min 2]) + abs([lindex $max 2])]
+pbc set [list $xsize $ysize $zsize] -all -molid top
 
-set x1 [lindex $min 0]
-set x2 [lindex $max 0]
-set y1 [lindex $min 1]
-set y2 [lindex $max 1]
-set z1 [lindex $min 2]
-set z2 [lindex $max 2]
-
-set xysize 80
-set x1 [expr { -$xysize / 2}]
-set x2 [expr { $xysize / 2}]
-set y1 [expr { -$xysize / 2}]
-set y2 [expr { $xysize / 2}]
-set zsize 100
-set z1 [expr { -$zsize / 2}]
-set z2 [expr { $zsize / 2}]
+## ---- Save Final Structure ---- ##
+$sel1 writepdb system.pdb
+$sel1 writepsf system.psf
 mol delete all
-set outfile [open "box_size.txt" w ]
- 
- #puts "Enter the file name **INCLUDE CHARACTERS BEFORE _autopsf"
- #set filex [gets stdin]
- set filex "memb_lig_${IC}"
- puts "****************************"
- puts $filex
- #puts "Enter Salt Concentration"
- #set salt [gets stdin]
- set salt 0.15
- ## solvating the file ##
- package require solvate
- solvate ${filex}.psf ${filex}.pdb -minmax [list [list $x1 $y1 [expr $z1 +10]] [list $x2 $y2 -22]] -o half_water
- solvate half_water.psf half_water.pdb -minmax [list [list $x1 $y1 22] [list $x2 $y2 [expr $z2+10]]] -o with_water -s WA
- mol delete all
- ## adding ions to neutralize the system ##
- package require autoionize
- if {$salt==0} {
- autoionize -psf with_water.psf -pdb with_water.pdb -cation SOD -anion CLA -seg ION -o ionize -neutralize 
- } else {
- autoionize -psf with_water.psf -pdb with_water.pdb -sc ${salt} -cation SOD -anion CLA -seg ION -o ionize 
- }
- # either use -> -sc ${salt} or -neutralize
- mol delete all
- ## setting up the box ##
- mol new ionize.psf
- mol addfile ionize.pdb
- set sel1 [atomselect top all]
 
- set minmax [measure minmax $sel1]
- set min [lindex $minmax 0]
- set max [lindex $minmax 1]
- set x1 [lindex $min 0]
- set x2 [lindex $max 0]
- set y1 [lindex $min 1]
- set y2 [lindex $max 1]
- set z1 [lindex $min 2]
- set z2 [lindex $max 2]
- set xsize [expr abs($x1)+abs($x2)]
- set ysize [expr abs($y1)+abs($y2)]
- #$sel1 moveby [list [expr -1*$x1] [expr -1*$y1] [expr -1*$z1]]
- pbc set [list [expr abs($x1)+abs($x2)] [expr abs($y1)+abs($y2)] [expr abs($z1)+abs($z2)]] -all -molid top
- ##****Change below according to salt concentration (4places)**#
- $sel1 writepdb ${filex}_solvated.pdb 
- $sel1 writepsf ${filex}_solvated.psf
- mol delete all
- ## Display of box vector parameters ##
- mol new ${filex}_solvated.psf
- mol addfile ${filex}_solvated.pdb
- set sel2 [atomselect top all]
- set minmax [measure minmax $sel2] 
- set vec [vecsub [lindex $minmax 1] [lindex $minmax 0]] 
- puts "cellBasisVector1 $xsize 0 0" 
- puts "cellBasisVector2 0 $ysize 0" 
- puts "cellBasisVector3 0 0 $zsize" 
- set center [measure center $sel2] 
- puts "cellOrigin 0 0 0 "
- puts " Total Charge on System: [eval vecadd [$sel2 get charge]]"
- ##### The below part is written to copy the box vectors in the box_size.txt file ######
- set x [lindex $vec 0]
- set y [lindex $vec 1]
- set z [lindex $vec 2]
- set xcenter [lindex $center 0] 
- set ycenter [lindex $center 1]
- set zcenter [lindex $center 2]
- puts $outfile [format "cellBasisVector1 %2.2f 0 0 "  $xsize ]
- puts $outfile [format "cellBasisVector2 0 %2.2f 0 "  $ysize ]
- puts $outfile [format "cellBasisVector3 0 0 %2.2f "  $zsize ]
- ## deleting unnecessary files ##
- file delete with_water.pdb
- file delete with_water.psf
- file delete with_water.log
- file delete ionize.pdb
- file delete ionize.psf
- file delete half_water.psf
- file delete half_water.pdb
- file delete half_water.log
- close $outfile
- pbc box -color orange -style tubes -width 1 -center bb
- mol delete all
- resetpsf
- }
- exit
+## ---- Save Box Info ---- ##
+mol new system.psf
+mol addfile system.pdb
+set sel2 [atomselect top all]
+set center [measure center $sel2]
+set outfile [open "box_size.txt" w]
+puts $outfile [format "cellBasisVector1 %2.2f 0 0 "  $xsize ]
+puts $outfile [format "cellBasisVector2 0 %2.2f 0 "  $ysize ]
+puts $outfile [format "cellBasisVector3 0 0 %2.2f "  $zsize ]
+puts $outfile "cellOrigin 0 0 0"
+puts $outfile "Total Charge on System: [eval vecadd [$sel2 get charge]]"
+close $outfile
+
+pbc box -color orange -style tubes -width 1 -center bb
+mol delete all
+resetpsf
+
+## ---- Clean Temporary Files ---- ##
+file delete with_water.pdb with_water.psf with_water.log
+file delete ionize.pdb ionize.psf
+file delete lower_water.pdb lower_water.psf lower_water.log
+
+exit
