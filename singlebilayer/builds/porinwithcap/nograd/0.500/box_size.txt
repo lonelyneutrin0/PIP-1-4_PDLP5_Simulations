@@ -1,0 +1,5 @@
+cellBasisVector1 154.94 0 0 
+cellBasisVector2 0 154.81 0 
+cellBasisVector3 0 0 191.00 
+cellOrigin 0 0 0
+Total Charge on System: 3.966689109802246e-5
