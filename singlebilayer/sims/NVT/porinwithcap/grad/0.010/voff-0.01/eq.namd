@@ -9,8 +9,8 @@
 ## ADJUSTABLE PARAMETERS                                   ##
 #############################################################
 
-structure          ../../../../../../builds/porinwithcap/grad/1.0/system.psf
-coordinates        ../../../../../../builds/porinwithcap/grad/1.0/system.pdb
+structure          ../../../../../../builds/porinwithcap/grad/0.010/system.psf
+coordinates        ../../../../../../builds/porinwithcap/grad/0.010/system.pdb
 set runnum [llength [glob -nocomplain run*.dcd]]
 set outputname		run_[format "%03d" $runnum]
 set inputname		run_[format "%03d" [expr {$runnum -1}]]
@@ -210,6 +210,21 @@ outputTiming 10000
 #############################################################
 colvars            on
 colvarsConfig      ../../../../../../builds/porinwithcap/membCnstrnt.in
+
+############################################################# 
+## GRID FORCE & RUN                                        ## 
+############################################################# 
+mgridforce                  on
+ 
+mgridforcefile       oxy    ../../../../../../builds/porinwithcap/grad/0.010/gradB_1.pdb
+mgridforcecol        oxy    B 
+mgridforcechargecol  oxy    O 
+mgridforcepotfile    oxy    ../../../../../../builds/porinwithcap/potential.dx
+mgridforcescale      oxy    0 0 1
+mgridforcecont1      oxy    yes
+mgridforcecont2      oxy    yes
+mgridforcecont3      oxy    yes
+mgridforcevoff       oxy    0 0 0.01
 
 #############################################################
 ## EXTRA PARAMETERS                                        ##
