@@ -249,7 +249,7 @@ proc get_volume { xscfile } {
 
 # Minimization
 if { $restartfoo <  0 } {
-	minimize 1000
+	minimize 10000
 	reinitvels          $temperature
 	run 50000
 } else {
